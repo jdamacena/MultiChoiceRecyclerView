@@ -172,6 +172,7 @@ public abstract class MultiChoiceAdapter<VH extends RecyclerView.ViewHolder> ext
      * and it'll automatically handle the list refresh without loosing current item state
      */
     public void refreshDataSet() {
+        // TODO: 10/03/2017 Create some possible instrumentation tests around this functionality
         refreshDataSetInternal();
     }
 
@@ -315,13 +316,14 @@ public abstract class MultiChoiceAdapter<VH extends RecyclerView.ViewHolder> ext
     }
 
     private void refreshDataSetInternal() {
+        // TODO: 10/03/2017 create some unit tests on this
         if (mItemList.isEmpty()) {
             for (int i = 0; i < getItemCount(); i++) {
                 mItemList.put(i, State.INACTIVE);
             }
-        } else if (mItemList.size() > getItemCount()) { // We have new items, let's add only the new ones as inactive
+        } else if (getItemCount() > mItemList.size()) { // We have new items, let's add only the new ones as inactive
             for (int i = 0; i < getItemCount(); i++) {
-                if (mItemList.get(i) != null) {
+                if (mItemList.get(i) == null) {
                     mItemList.put(i, State.INACTIVE);
                 }
             }
